@@ -10,3 +10,6 @@
 [submodule "lib/TimeSide"]
 	path = lib/TimeSide
 	url = https://github.com/ANR-kamoulox/TimeSide.git
+[submodule "lib/kamoulox_plugins"]
+	path = lib/kamoulox_plugins
+	url = git@github.com:ANR-kamoulox/TimeSide-Plugins.git
