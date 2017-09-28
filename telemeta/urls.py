@@ -84,7 +84,8 @@ urlpatterns = [
     url(r'^archives/items/(?P<item_public_id>[A-Za-z0-9._-]+)/related/(?P<media_id>[A-Za-z0-9._-]+)/view/$', item_view.related_media_item_stream, name="telemeta-item-related"),
     url(r'^archives/items/(?P<item_public_id>[A-Za-z0-9._-]+)/related/(?P<media_id>[A-Za-z0-9._-]+)/download/$', item_view.related_media_item_download, name="telemeta-item-related-download"),
     url(r'^archives/items/(?P<public_id>[A-Za-z0-9._-]+)/markers/json/$', ItemMarkerJsonView.as_view(), name="telemeta-item-markers-json"),
-
+    # Kamoulox
+    url(r'^archives/items/kamoulox/denoise/(?P<public_id>[A-Za-z0-9._-]+)/$', item_view.item_denoise, name="telemeta-item-denoise"),
     # Markers
     url(r'^archives/markers/(?P<marker_id>[A-Za-z0-9]+)/$', item_view.item_detail, name="telemeta-item-detail-marker"),
 

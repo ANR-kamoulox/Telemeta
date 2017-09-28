@@ -454,6 +454,41 @@ class ItemView(ItemBaseMixin):
             #patch_cache_control(response, no_cache=True, no_store=True, must_revalidate=True)
             return response
 
+    def item_denoise(self, request, public_id):
+        """Denoise a given media item with dummy_denoise from Kamoulox plugins"""
+
+        item = MediaItem.objects.get(public_id=public_id)
+        public_access = get_item_access(item, request.user)
+
+        if not public_access == 'full' and \
+                not (request.user.has_perm('telemeta.can_play_all_items') or request.user.is_superuser):
+            mess = ugettext('Access not allowed')
+            title = 'Item file : ' + public_id + '.' + extension + ' : ' + mess
+            description = ugettext('Please login or contact the website administator to get a private access.')
+            messages.error(request, title)
+            return render(request, 'telemeta/messages.html', {'description': description})
+
+        # Timeside Kamoulox denoise process
+        from timeside.core import get_processor
+        source, source_type = item.get_source()
+        encoder_cls = get_processor('mp3_encoder')
+        denoise_media = item.public_id + '_denoise' + '.' + encoder_cls.file_extension()
+        denoise_media = os.path.join( self.cache_export.dir ,
+                                      denoise_media)
+        decoder = get_processor('file_decoder')(source)
+        fx = get_processor('dummy_denoise')()
+        encoder = encoder_cls(denoise_media,
+                              overwrite=True)
+        pipe = (decoder|fx|encoder)
+        try:
+            pipe.run(blocksize=48000*2)
+        except IOError as e:
+            raise(TypeError(denoise_media))
+        print 'plop'
+        
+        response = serve_media(denoise_media, content_type=encoder.mime_type())
+        return response
+        
     def item_export_available(self, request, public_id, extension):
         return self.item_export(request, public_id, extension, return_availability=True)
 
