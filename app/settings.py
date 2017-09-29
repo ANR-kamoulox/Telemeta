@@ -164,6 +164,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'django_extensions',
+    'rest_framework',
+    'rest_framework.authtoken',
     'telemeta',
     'timeside.player',
     'timeside.server',
@@ -176,7 +178,6 @@ INSTALLED_APPS = (
     'bootstrap3',
     'bootstrap_pagination',
     'registration',
-    'rest_framework',
     'djcelery',
     'haystack',
     'djangobower',
@@ -366,3 +367,15 @@ BOWER_INSTALLED_APPS = (
     # 'https://github.com/Parisson/loaders.git',
     # 'https://github.com/Parisson/ui.git',
 )
+
+
+# TIMESIDE API
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ), 
+     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
