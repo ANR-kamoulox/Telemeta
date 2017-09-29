@@ -221,9 +221,12 @@
         {% block KAMOULOX %}
     	<a href="{% url "telemeta-item-denoise" item.public_id %}" >
     	  <button type="button" class="btn btn-primary" style="float:left;margin-top:0.5em;margin-bottom:1em;border-color: #ffffff; ">
-                <b>DENOISE</b>
-    	  </button>
-    	</a>
+            <b>DENOISE</b>
+          </button>
+        </a>
+         <ul>
+            <li><a href="{{ts_item_api_url}}"> {{ts_item_uuid}}</a></li>
+          </ul>
     	{% endblock KAMOULOX %}
 
         {% comment %}

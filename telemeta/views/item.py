@@ -927,11 +927,12 @@ class ItemDetailView(ItemViewMixin, DetailView):
 
         # Corresponding TimeSide Item
         source, source_type = item.get_source()
-        # if source:
-        #     ts_item, c = ts.models.Item.objects.get_or_create(**{source_type: source})
-        #     if c:
-        #         ts_item.title = item.title
-        #         ts_item.save()
+        source_type = 'source_' + source_type
+        if source:
+            ts_item, created = ts.models.Item.objects.get_or_create(**{source_type: source})
+            if created:
+                ts_item.title = item.title
+                ts_item.save()
 
         self.item_analyze(item)
 
@@ -978,10 +979,11 @@ class ItemDetailView(ItemViewMixin, DetailView):
         context['private_extra_types'] = private_extra_types.values()
         context['site'] = 'http://' + Site.objects.all()[0].name
         context['rang_item_playlist'] = rang
-        # if ts_item:
-        #     context['ts_item_id'] = ts_item.pk
-        # else:
-        #     context['ts_item_id'] = None
+        if ts_item:
+            context['ts_item_uuid'] = ts_item.uuid
+            context['ts_item_api_url'] = reverse('item-detail', kwargs={'uuid': ts_item.uuid}) 
+        else:
+            context['ts_item_uuid'] = None
 
         return context
 
