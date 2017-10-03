@@ -25,7 +25,7 @@
 data:
   image: debian:jessie
   volumes:
-     - ./data/media/:/srv/media
+     - /home/parisson/CREM/Telemeta/media/:/srv/media
      - ./data/backup/:/srv/backup
      - ./data/static:/srv/static
      - ./data/bower:/srv/bower
@@ -79,7 +79,7 @@ worker:
 nginx:
   image: nginx
   ports:
-    - "8000:80"
+    - "8010:80"
   volumes:
     - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
   volumes_from:
@@ -91,7 +91,7 @@ nginx:
 phpmyadmin:
     image: nazarpc/phpmyadmin
     ports:
-      - "1234:80"
+      - "1244:80"
     links:
       - db:mysql
     environment:

@@ -14,7 +14,6 @@ env = environ.Env(DEBUG=(bool, False),
 # Django settings for server project.
 DEBUG = env('DEBUG')  # False if not in os.environ
 
-
 sys.dont_write_bytecode = True
 
 ALLOWED_HOSTS = ['*']
@@ -225,7 +224,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/desk/lists/'
 
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = 'cchum-kvm-telemeta.in2p3.fr'
 DEFAULT_FROM_EMAIL = 'webmaster@parisson.com'
 
 TIMESIDE_DEFAULT_GRAPHER_ID = 'waveform_centroid'
