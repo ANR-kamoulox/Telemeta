@@ -926,9 +926,10 @@ class ItemDetailView(ItemViewMixin, DetailView):
         previous, next = self.item_previous_next(item)
 
         # Corresponding TimeSide Item
+        ts_item = None
         source, source_type = item.get_source()
-        source_type = 'source_' + source_type
         if source:
+            source_type = 'source_' + source_type
             ts_item, created = ts.models.Item.objects.get_or_create(**{source_type: source})
             if created:
                 ts_item.title = item.title
